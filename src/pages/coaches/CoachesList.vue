@@ -22,7 +22,31 @@
 </template>
 
 <script>
-  export default {};
+  import CoachItem from "../../components/coaches/CoachItem.vue";
+  export default {
+    computed: {
+      filteredCoaches() {
+        return this.$store.getters["coaches/coaches"];
+      },
+      hasCoaches() {
+        return this.$store.getters["coaches/hasCoaches"];
+      },
+    },
+    components: {
+      CoachItem,
+    },
+  };
 </script>
 
-<style scoped></style>
+<style scoped>
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
