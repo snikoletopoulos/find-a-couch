@@ -9,4 +9,7 @@ app.use(router);
 app.use(store);
 
 // Vue components
+import BaseButton from "./components/ui/BaseButton.vue";
+app.component("base-button", BaseButton);
+
 app.mount("#app");
