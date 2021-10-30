@@ -15,6 +15,7 @@ export default createRouter({
     {
       path: "/coaches/:id",
       component: CoachDetail,
+      props: true,
       children: [{ path: "contact", component: ContactCoach }],
     },
     { path: "/register", component: CoachRegistation },
