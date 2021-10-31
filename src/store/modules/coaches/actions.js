@@ -39,6 +39,9 @@ export default {
         coaches.push(coach);
       }
       context.commit("setCoaches", coaches);
+    } else {
+      const error = new Error(response.message || "Failed to fetch!");
+      throw error;
     }
   },
 };
