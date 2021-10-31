@@ -21,12 +21,26 @@
   import CoachFilter from "../../components/coaches/CoachFilter.vue";
 
   export default {
+    data() {
+      return {
+        activeFilters: {
+          frontend: true,
+          backend: true,
+          career: true,
+        },
+      };
+    },
     computed: {
       filteredCoaches() {
         return this.$store.getters["coaches/coaches"];
       },
       hasCoaches() {
         return this.$store.getters["coaches/hasCoaches"];
+      },
+    },
+    methods: {
+      setFilters(updatedFilters) {
+        this.activeFilters = updatedFilters;
       },
     },
     components: {
