@@ -32,7 +32,7 @@
           ...this.filters,
           [inputId]: isActive,
         };
-        this.filter = updatedFilters;
+        this.filters = updatedFilters;
         this.$emit("change-filter", updatedFilters);
       },
     },
