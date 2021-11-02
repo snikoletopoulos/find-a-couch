@@ -39,8 +39,8 @@ export default {
           message: response.data[key].message,
         };
         requests.push(request);
-        context.commit("requests/setRequests", requests);
       }
+      context.commit("setRequests", requests);
     } else {
       const error = new Error(response.message || "Failed to fetch request.");
       throw error;
