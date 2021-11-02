@@ -54,7 +54,7 @@
       },
     },
     created() {
-      this.loadRequests;
+      this.loadRequests();
     },
     components: {
       RequestItem,
