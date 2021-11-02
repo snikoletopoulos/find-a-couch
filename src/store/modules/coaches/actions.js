@@ -20,7 +20,10 @@ export default {
       context.commit("registerCoach", { ...coachData, id: userId });
     }
   },
-  async loadCoaches(context) {
+  async loadCoaches(context, payload) {
+    if (!payload.forceRefresh && !context.getters.shouldUpdate) {
+      return;
+    }
     const response = await axios.get(
       `https://find-a-coach-abbee-default-rtdb.europe-west1.firebasedatabase.app/coaches.json`
     );
@@ -39,6 +42,7 @@ export default {
         coaches.push(coach);
       }
       context.commit("setCoaches", coaches);
+      context.commit("setFetchTimestamp");
     } else {
       const error = new Error(response.message || "Failed to fetch!");
       throw error;
