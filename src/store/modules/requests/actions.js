@@ -28,7 +28,6 @@ export default {
       `https://find-a-coach-abbee-default-rtdb.europe-west1.firebasedatabase.app/requests/${coachId}.json`
     );
 
-    console.log(response);
     if (response.status === 200) {
       const requests = [];
       for (const key in response.data) {
