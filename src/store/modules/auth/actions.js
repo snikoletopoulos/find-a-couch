@@ -2,8 +2,21 @@ import axios from "axios";
 
 export default {
   async login(context, payload) {
+    return context.dispatch("auth", {
+      ...payload,
+      mode: "login",
+    });
+  },
+  async signup(context, payload) {
+    return context.dispatch("auth", {
+      ...payload,
+      mode: "signup",
+    });
+  },
+  async auth(context, payload) {
+    const modeUrl = payload.mode === "login" ? "signInWithPassword" : payload.mode === "signup" ? "signUp" : "";
     const response = await axios.post(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_FIREBASE_API_KEY}`,
+      `https://identitytoolkit.googleapis.com/v1/accounts:${modeUrl}?key=${process.env.VUE_APP_FIREBASE_API_KEY}`,
       {
         email: payload.email,
         password: payload.password,
@@ -16,32 +29,26 @@ export default {
       throw error;
     }
 
+    localStorage.setItem("token", response.data.idToken);
+    localStorage.setItem("userId", response.data.localId);
+
     context.commit("setUser", {
       token: response.data.idToken,
       userId: response.data.localId,
       tokenExpiration: response.data.expiresIn,
     });
   },
-  async signup(context, payload) {
-    const response = await axios.post(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.VUE_APP_FIREBASE_API_KEY}`,
-      {
-        email: payload.email,
-        password: payload.password,
-        returnSecureToken: true,
-      }
-    );
+  tryLogin(context) {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
 
-    if (response.status !== 200) {
-      const error = new Error(response.messagesaa || "Failed to authenticate.");
-      throw error;
+    if (token && userId) {
+      context.commit("setUser", {
+        token: token,
+        userId: userId,
+        tokenExpiration: null,
+      });
     }
-
-    context.commit("setUser", {
-      token: response.data.idToken,
-      userId: response.data.localId,
-      tokenExpiration: response.data.expiresIn,
-    });
   },
   logout(context) {
     context.commit("setUser", {
