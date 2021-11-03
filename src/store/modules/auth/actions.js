@@ -30,7 +30,7 @@ export default {
         password: payload.password,
         returnSecureToken: true,
       }
-      );
+    );
 
     if (response.status !== 200) {
       const error = new Error(response.messagesaa || "Failed to authenticate.");
@@ -41,6 +41,13 @@ export default {
       token: response.data.idToken,
       userId: response.data.localId,
       tokenExpiration: response.data.expiresIn,
+    });
+  },
+  logout(context) {
+    context.commit("setUser", {
+      token: null,
+      userId: null,
+      tokenExpiraton: null,
     });
   },
 };
