@@ -24,8 +24,9 @@ export default {
   },
   async fetchRequests(context) {
     const coachId = context.rootGetters.userId;
+    const token = context.rootGetters.token
     const response = await axios.get(
-      `https://find-a-coach-abbee-default-rtdb.europe-west1.firebasedatabase.app/requests/${coachId}.json`
+      `https://find-a-coach-abbee-default-rtdb.europe-west1.firebasedatabase.app/requests/${coachId}.json?auth=${token}`
     );
 
     if (response.status === 200) {

@@ -11,8 +11,9 @@ export default {
       areas: payload.areas,
     };
 
+    const token = context.rootGetters.token;
     const response = await axios.put(
-      `https://find-a-coach-abbee-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json`,
+      `https://find-a-coach-abbee-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json?auth=${token}`,
       coachData
     );
 
