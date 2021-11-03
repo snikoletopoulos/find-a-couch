@@ -7,7 +7,11 @@
           <router-link to="/coaches">All Coaches</router-link>
         </li>
         <li>
-          <router-link to="/requests">Requests</router-link>
+          <router-link v-if="isLoggedin" to="/requests">Requests</router-link>
+          <router-link v-else to="/auth">Login</router-link>
+        </li>
+        <li v-if="isLoggedin">
+          <base-button @click="logout">Logout</base-button>
         </li>
       </ul>
     </nav>
@@ -15,7 +19,18 @@
 </template>
 
 <script>
-  export default {};
+  export default {
+    computed: {
+      isLoggedin() {
+        return this.$store.getters.isAuthenticated;
+      },
+    },
+    methods: {
+      logout() {
+        this.$store.dispatch("logout");
+      },
+    },
+  };
 </script>
 
 <style scoped>
