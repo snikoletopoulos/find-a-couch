@@ -7,5 +7,8 @@ export default {
   },
   isAuthenticated(store) {
     return !!store.token
+  },
+  didAutoLogout(store) {
+    return store.didAutoLogout;
   }
 };
