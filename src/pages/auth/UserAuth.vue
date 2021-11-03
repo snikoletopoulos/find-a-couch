@@ -76,6 +76,8 @@
           this.error = error.message || "Failed to authenticate, try again later.";
         }
         this.isLoading = false;
+        const redirectUrl = this.$route.query.redirect ?? "coaches"
+        this.$router.replace(redirectUrl);
       },
       switchAuthMode() {
         if (this.mode === "login") {
